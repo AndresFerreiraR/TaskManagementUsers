@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\TaskManagement.Users.Commons\TaskManagement.Users.Commons.csproj" />
+    <ProjectReference Include="..\TaskManagement.Users.Domain\TaskManagement.Users.Domain.csproj" />
+    <ProjectReference Include="..\TaskManagement.Users.Infrastructure\TaskManagement.Users.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>
