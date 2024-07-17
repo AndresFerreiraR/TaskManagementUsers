@@ -7,7 +7,7 @@ namespace TaskManagement.Users.Infrastructure
     using TaskManagement.Users.Infrastructure.Classes;
     using TaskManagement.Users.Infrastructure.Context;
     using TaskManagement.Users.Infrastructure.Interfaces;
-
+    using TaskManagement.Users.Infrastructure.TestIdentity;
 
     public static class ConfigureServices
     {
@@ -21,9 +21,14 @@ namespace TaskManagement.Users.Infrastructure
             identityBuilder.AddEntityFrameworkStores<UserTaskContext>();
             identityBuilder.AddSignInManager<SignInManager<User>>();
 
+            var serviceProvider = services.BuildServiceProvider();
+            var context = serviceProvider.GetRequiredService<UserTaskContext>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+            Task.WaitAll(TestData.InsertData(context, userManager));
+
             services.AddSingleton(TimeProvider.System);
 
-            
+
             services.AddScoped<IUserDAL, UserDAL>();
 
             return services;
