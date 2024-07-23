@@ -24,7 +24,7 @@ namespace TaskManagement.Users.Api.Controllers
 
 
         [HttpPost("CreateUser")]
-        public async Task<ActionResult> CreateUser(UserDto userDto)
+        public async Task<ActionResult> CreateUser([FromBody] UserDto userDto)
         {
             await _businessUser.CreateUser(userDto);
             return Ok();

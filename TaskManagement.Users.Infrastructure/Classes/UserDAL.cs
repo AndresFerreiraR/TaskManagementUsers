@@ -58,7 +58,6 @@ namespace TaskManagement.Users.Infrastructure.Classes
         {
             var userFound = await _userManager.FindByNameAsync(user.UserName);
             userFound.FirstName = user.FirstName;
-            userFound.MiddleInitial = user.MiddleInitial;
             userFound.LastName = user.LastName;
             userFound.PasswordHash = _passwordHasher.HashPassword(userFound, user.Password);
             var resultadoUpdate = await _userManager.UpdateAsync(userFound);
