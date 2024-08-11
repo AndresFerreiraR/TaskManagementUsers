@@ -29,5 +29,12 @@ namespace TaskManagement.Users.Api.Controllers
             await _businessUser.CreateUser(userDto);
             return Ok();
         }
+
+        [HttpPost("LogUser")]
+        public async Task<ActionResult> LogUser([FromBody] LogDataUserDto loguserDto)
+        {
+            var response = await _businessUser.LoginUser(loguserDto);
+            return Ok(response);
+        }
     }
 }

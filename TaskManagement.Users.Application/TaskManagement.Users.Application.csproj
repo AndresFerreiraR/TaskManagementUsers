@@ -1,11 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\TaskManagement.Users.Commons\TaskManagement.Users.Commons.csproj" />
-    <ProjectReference Include="..\TaskManagement.Users.Domain\TaskManagement.Users.Domain.csproj" />
-    <ProjectReference Include="..\TaskManagement.Users.Infrastructure\TaskManagement.Users.Infrastructure.csproj" />
+    <ProjectReference Include="..\TaskManagement.Users.Commons\TaskManagement.Users.Commons.csproj"/>
+    <ProjectReference Include="..\TaskManagement.Users.Domain\TaskManagement.Users.Domain.csproj"/>
+    <ProjectReference Include="..\TaskManagement.Users.Infrastructure\TaskManagement.Users.Infrastructure.csproj"/>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="AutoMapper" Version="13.0.1"/>
+    <PackageReference Include="FluentValidation" Version="11.9.2"/>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.2"/>
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>

@@ -14,30 +14,44 @@ namespace TaskManagement.Users.Infrastructure.Classes
         private readonly UserManager<User> _userManager;
         private readonly ILogger<UserDAL> _logger;
         private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly SignInManager<User> _signInManager;
 
         public UserDAL(UserTaskContext context,
                        UserManager<User> userManager,
                        ILogger<UserDAL> logger,
-                       IPasswordHasher<User> passwordHasher)
+                       IPasswordHasher<User> passwordHasher,
+                       SignInManager<User> signInManager)
         {
             _context = context;
             _userManager = userManager;
             _logger = logger;
             _passwordHasher = passwordHasher;
+            _signInManager = signInManager;
         }
 
+        public async Task<SignInResult> CheckUserPassword(User user, string password)
+        {
+            var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
+            return result;
+        }
 
-        public async Task CreateUser(User user)
+        public async Task CreateUser(User user, string password)
         {
             try
             {
-                await _userManager.CreateAsync(user, user.Password);
+                await _userManager.CreateAsync(user, password);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 throw new Exception(ex.Message);
             }
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            return user!;
         }
 
         public async Task<User> GetUserById(Guid Id)
@@ -47,6 +61,12 @@ namespace TaskManagement.Users.Infrastructure.Classes
             return user;
         }
 
+        public async Task<User> GetUserByUserName(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            return user!;
+        }
+
         public async Task<List<User>> GetUsers()
         {
             var users = await _context.Users.ToListAsync();
@@ -54,14 +74,16 @@ namespace TaskManagement.Users.Infrastructure.Classes
             return users;
         }
 
-        public async Task UpdateUser(User user)
+        public async Task UpdateUser(User user, string password)
         {
             var userFound = await _userManager.FindByNameAsync(user.UserName);
             userFound.FirstName = user.FirstName;
             userFound.LastName = user.LastName;
-            userFound.PasswordHash = _passwordHasher.HashPassword(userFound, user.Password);
+            userFound.PasswordHash = _passwordHasher.HashPassword(userFound, password);
             var resultadoUpdate = await _userManager.UpdateAsync(userFound);
         }
+
+        
 
     }
 }

@@ -1,6 +1,9 @@
 using AutoMapper;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using TaskManagement.Users.Application.Classes;
+using TaskManagement.Users.Application.Common.Validations;
+using TaskManagement.Users.Application.Dto;
 using TaskManagement.Users.Application.Interfaces;
 using TaskManagement.Users.Application.Mapper;
 
@@ -18,7 +21,9 @@ namespace TaskManagement.Users.Application
 
             IMapper mapper = mappingConfig.CreateMapper();
 
+
             services.AddSingleton(mapper);
+            services.AddValidatorsFromAssemblyContaining<LogDataUserValidator>();
 
             services.AddScoped<IUserBL, UserBL>();
 
