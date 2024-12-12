@@ -35,11 +35,12 @@ namespace TaskManagement.Users.Infrastructure.Classes
             return result;
         }
 
-        public async Task CreateUser(User user, string password)
+        public async Task<bool> CreateUser(User user, string password)
         {
             try
             {
-                await _userManager.CreateAsync(user, password);
+                var response  = await _userManager.CreateAsync(user, password);
+                return response.Succeeded;
             }
             catch (Exception ex)
             {
@@ -74,13 +75,14 @@ namespace TaskManagement.Users.Infrastructure.Classes
             return users;
         }
 
-        public async Task UpdateUser(User user, string password)
+        public async Task<bool> UpdateUser(User user, string password)
         {
             var userFound = await _userManager.FindByNameAsync(user.UserName);
             userFound.FirstName = user.FirstName;
             userFound.LastName = user.LastName;
             userFound.PasswordHash = _passwordHasher.HashPassword(userFound, password);
             var resultadoUpdate = await _userManager.UpdateAsync(userFound);
+            return resultadoUpdate.Succeeded;
         }
 
         

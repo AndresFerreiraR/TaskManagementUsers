@@ -5,8 +5,8 @@ namespace TaskManagement.Users.Infrastructure.Interfaces
 {
     public interface IUserDAL
     {
-        public Task CreateUser(User user, string password);
-        public Task UpdateUser(User user, string password);
+        public Task<bool> CreateUser(User user, string password);
+        public Task<bool> UpdateUser(User user, string password);
         public Task<User> GetUserById(Guid Id);
         public Task<List<User>> GetUsers();
         public Task<User> GetUserByEmail(string email);

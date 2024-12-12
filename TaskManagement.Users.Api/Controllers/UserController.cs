@@ -15,6 +15,13 @@ namespace TaskManagement.Users.Api.Controllers
             _businessUser = businessUser;
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<UserDto>>> GetUserById(string id)
+        {
+            var listUsers = await _businessUser.GetUserById(Guid.Parse(id));
+            return Ok(listUsers);
+        }
+
         [HttpGet]
         public async Task<ActionResult<List<UserDto>>> GetUser()
         {
@@ -23,17 +30,25 @@ namespace TaskManagement.Users.Api.Controllers
         }
 
 
-        [HttpPost("CreateUser")]
+        [HttpPost()]
         public async Task<ActionResult> CreateUser([FromBody] UserDto userDto)
         {
-            await _businessUser.CreateUser(userDto);
-            return Ok();
+            userDto.Id = Guid.NewGuid().ToString();
+            var result = await _businessUser.CreateUser(userDto);
+            return Ok(result);
         }
 
         [HttpPost("LogUser")]
         public async Task<ActionResult> LogUser([FromBody] LogDataUserDto loguserDto)
         {
             var response = await _businessUser.LoginUser(loguserDto);
+            return Ok(response);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser([FromBody] UserDto userDto)
+        {
+            var response = await _businessUser.UpdateUser(userDto);
             return Ok(response);
         }
     }
