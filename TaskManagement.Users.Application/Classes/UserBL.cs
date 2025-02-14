@@ -106,11 +106,11 @@ namespace TaskManagement.Users.Application.Classes
 
     private async Task<User> FindUserByEmailOrUserName(LogDataUserDto logData, User user)
     {
-      if (logData.UserEmail.IsNullOrEmpty() && logData.UserName is not null)
+      if (string.IsNullOrEmpty(logData.UserEmail) && !string.IsNullOrEmpty(logData.UserName))
       {
         user = await _repoUser.GetUserByUserName(logData.UserName);
       }
-      else if (logData.UserEmail.IsNullOrEmpty() && logData.UserName is null)
+      else if (!string.IsNullOrEmpty(logData.UserEmail) && string.IsNullOrEmpty(logData.UserName))
       {
         user = await _repoUser.GetUserByEmail(logData.UserEmail);
       }
